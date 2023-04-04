@@ -2,20 +2,20 @@ import rsa
 
 def generateKeys():
     (publicKey, privateKey) = rsa.newkeys(1024)
-    with open('keys/publcKey.pem', 'wb') as p:
+    with open('keys/publicKey.pem', 'wb') as p:
         p.write(publicKey.save_pkcs1('PEM'))
     with open('keys/privateKey.pem', 'wb') as p:
         p.write(privateKey.save_pkcs1('PEM'))
 
-    def loadKeys():
-        with open('keys/publicKey.pem', 'rb') as p:
-            publicKey = rsa.PublicKey.load_pkcs1(p.read())
+def loadKeys():
+    with open('keys/publicKey.pem', 'rb') as p:
+        publicKey = rsa.PublicKey.load_pkcs1(p.read())
     with open('keys/privateKey.pem', 'rb') as p:
         privateKey = rsa.PrivateKey.load_pkcs1(p.read())
     return privateKey, publicKey
 
-    def encrypt(message, key):
-        return rsa.encrypt(message.encode('ascii'), key)       
+def encrypt(message, key):
+    return rsa.encrypt(message.encode('ascii'), key)       
 
 def decrypt(ciphertext, key):
     try:
@@ -33,7 +33,7 @@ def verify(message, signature, key):
         return False
 
 generateKeys()
-publicKey, privateKey =load_keys()
+publicKey, privateKey = loadKeys()
 
 message = input('Write your message here:')
 ciphertext = encrypt(message, publicKey)
